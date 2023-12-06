@@ -9,10 +9,16 @@ transactions = [
     {'id': 2, 'date': '2023-06-02', 'amount': -200},
     {'id': 3, 'date': '2023-06-03', 'amount': 300}
 ]
+
+# Get total balance
+def total_balance():
+    balance = sum(transaction['amount'] for transaction in transactions)
+    return balance
+
 # Read operation
 @app.route('/')
 def get_transactions():
-    return render_template('transactions.html', transactions=transactions)
+    return render_template('transactions.html', transactions=transactions, total_balance=total_balance())
 
 # Create operation
 @app.route("/add", methods=["GET", "POST"])
@@ -74,6 +80,7 @@ def search_transactions():
         return render_template('transactions.html', transactions=filtered_transactions)
 
     return render_template('search.html')
+
 
 # Run the Flask app
 if __name__ == "__main__":
